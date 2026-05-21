@@ -1,4 +1,3 @@
-// db.js — SQL Server connection config (Windows Authentication)
 const sql = require('mssql/msnodesqlv8');
 
 const config = {

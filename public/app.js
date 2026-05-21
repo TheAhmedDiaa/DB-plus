@@ -1,7 +1,6 @@
-// ===== app.js — Frontend Logic =====
 const API = '';
 
-// ===== Utility Functions =====
+// Utility Functions
 function formatDate(d) {
   if (!d) return '—';
   return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
@@ -52,11 +51,11 @@ function setupSearch(inputId, tableBodyId, dataArray, renderFn) {
   });
 }
 
-// ===== Modal Helpers =====
+// Modal Helpers
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-// ===== Dashboard =====
+// Dashboard
 async function initDashboard() {
   try {
     const [products, orders, customers, suppliers] = await Promise.all([
@@ -103,7 +102,7 @@ function animateCount(id, target) {
   }, 30);
 }
 
-// ===== Orders =====
+// Orders
 let allOrders = [];
 let productsCache = [];
 let editingOrderId = null;
@@ -144,7 +143,7 @@ async function initOrders() {
     } else if (grid) {
       grid.innerHTML = '<span style="color:var(--text-muted)">No products available.</span>';
     }
-  } catch (err) { /* toast already shown */ }
+  } catch (err) {}
 
   await loadOrders();
   const form = document.getElementById('order-form');
@@ -290,7 +289,6 @@ async function editOrder(id) {
     // Reset quantities
     document.querySelectorAll('.product-qty').forEach(i => i.value = 0);
 
-    // Set quantities for associated products to 1 (since DB doesn't store qty)
     if (order.product_ids && order.product_ids.length > 0) {
       order.product_ids.forEach(pid => {
         const input = document.querySelector('.product-qty[data-product-id="' + pid + '"]');
@@ -333,10 +331,10 @@ async function deleteOrder(id) {
     await apiFetch(`/api/orders/${id}`, { method: 'DELETE' });
     showToast('Order deleted.');
     await loadOrders();
-  } catch (err) { /* toast already shown */ }
+  } catch (err) {}
 }
 
-// ===== Add Customer (from modal) =====
+// Add Customer
 async function handleAddCustomer(e) {
   e.preventDefault();
   const body = {
@@ -363,7 +361,7 @@ async function handleAddCustomer(e) {
   } catch (err) { /* toast already shown */ }
 }
 
-// ===== Add Supplier (from modal) =====
+// Add Supplier (from modal) 
 async function handleAddSupplier(e) {
   e.preventDefault();
   const body = {
@@ -389,7 +387,7 @@ async function handleAddSupplier(e) {
   } catch (err) { /* toast already shown */ }
 }
 
-// ===== Products =====
+// Products
 async function initProducts() {
   try {
     const products = await apiFetch('/api/products');
@@ -423,7 +421,7 @@ function renderProducts(products) {
   }).join('');
 }
 
-// ===== Warehouse =====
+// Warehouse
 async function initWarehouse() {
   const grid = document.getElementById('warehouse-grid');
   try {
@@ -451,7 +449,7 @@ async function initWarehouse() {
   }
 }
 
-// ===== Customers =====
+// Customers
 async function initCustomers() {
   try {
     const customers = await apiFetch('/api/customers');
@@ -481,7 +479,7 @@ function renderCustomers(customers) {
   `).join('');
 }
 
-// ===== Suppliers =====
+// Suppliers
 async function initSuppliers() {
   try {
     const suppliers = await apiFetch('/api/suppliers');
@@ -512,7 +510,7 @@ function renderSuppliers(suppliers) {
   `).join('');
 }
 
-// ===== Employees =====
+// Employees
 let allEmployees = [];
 let editingEmpId = null;
 

@@ -1,4 +1,3 @@
-// server.js — Express entry point
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -17,7 +16,7 @@ app.use('/api/warehouse', require('./routes/warehouse'));
 app.use('/api/orders', require('./routes/orders'));
 app.use('/api/status', require('./routes/status'));
 
-// Serve index.html for root
+// Serve index.html
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
